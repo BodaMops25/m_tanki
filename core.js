@@ -14,3 +14,4 @@ function vecAngle(x, y) {
 }
 
 if(typeof(module) !== "undefined") module.exports = {radToDeg, degToRad, vecAngle}
+
