@@ -1,4 +1,5 @@
 const http = require('http'),
+      PORT = process.env.PORT || 80,
       fs = require('fs').promises
 
 http.createServer((req, res) => {
@@ -43,6 +44,4 @@ http.createServer((req, res) => {
     res.end()
   }
   
-}).listen(5000, 'localhost', () => {
-  // console.log('Server running')
-})
+}).listen(PORT)
