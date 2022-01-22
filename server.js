@@ -1,5 +1,5 @@
 const ws = require('ws'),
-      server = new ws.Server()
+      server = new ws(server)
 
 const plyr = require('./player.js'),
       gameData = require('./game.json')
