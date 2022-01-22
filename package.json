@@ -4,7 +4,7 @@
   "description": "multiplayer game on node js & WebSocket",
   "main": "server.js",
   "scripts": {
-    "start": "node static-server.js & node server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
