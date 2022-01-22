@@ -1,5 +1,7 @@
 const ws = require('ws'),
-      server = new ws(server)
+      PORT = process.env.PORT || 80,
+      HOST = location.origin.replace(/^http/, 'ws'),
+      server = new ws.Server({port: PORT, server: HOST})
 
 const plyr = require('./player.js'),
       gameData = require('./game.json')
