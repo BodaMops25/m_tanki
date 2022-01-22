@@ -2,7 +2,7 @@ const http = require('http'),
       PORT = process.env.PORT || 80,
       fs = require('fs').promises
 
-http.createServer((req, res) => {
+const server = http.createServer((req, res) => {
 
   if(req.method === 'GET') {
 
@@ -45,3 +45,5 @@ http.createServer((req, res) => {
   }
   
 }).listen(PORT)
+
+module.exports = {server}

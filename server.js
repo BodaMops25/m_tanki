@@ -1,7 +1,6 @@
-const ws = require('ws'),
-      PORT = process.env.PORT || 80,
-      HOST = location.origin.replace(/^http/, 'ws'),
-      server = new ws.Server({port: PORT, server: HOST})
+const {server} = require('./static-server.js'),
+      {Server} = require('ws'),
+      wss = new Server({server})
 
 const plyr = require('./player.js'),
       gameData = require('./game.json')
@@ -49,15 +48,15 @@ const getUpdate = setInterval(() => {
     })
   })  
 
-  server.clients.forEach(client => {
-    if(client.readyState === ws.WebSocket.OPEN) client.send(respondToClient())
+  wss.clients.forEach(client => {
+    if(client.readyState === Server.WebSocket.OPEN) client.send(respondToClient())
   })
 
 }, 1000 / gameData.gameFPS)
 
 // SERVER
 
-server.on('connection', webs => {
+wss.on('connection', webs => {
 
   webs.on('message', msg => {
     msg = JSON.parse(msg.toString())
@@ -76,7 +75,6 @@ server.on('connection', webs => {
     }
   })
 
-
 })
 
-// console.log('ws server running')
+// console.log('Server server running')
