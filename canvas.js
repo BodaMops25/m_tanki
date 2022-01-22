@@ -3,7 +3,8 @@ const cnvs = document.querySelector('#gamefield'),
       cW = 500,
       cH = 500,
       uid = Math.random(),
-      ws = new WebSocket('ws://localhost:5250')
+      HOST = location.origin.replace(/^http/, 'ws')
+      ws = new WebSocket(HOST)
 
 ws.onopen = () => {
   ws.send(JSON.stringify({
