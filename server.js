@@ -49,7 +49,7 @@ const getUpdate = setInterval(() => {
   })  
 
   wss.clients.forEach(client => {
-    if(client.readyState === Server.WebSocket.OPEN) client.send(respondToClient())
+    if(client.readyState === WebSocket.OPEN) client.send(respondToClient())
   })
 
 }, 1000 / gameData.gameFPS)
