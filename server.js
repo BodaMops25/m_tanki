@@ -59,20 +59,27 @@ const plyr = require('./player.js'),
 let u_in_resp = {}
 
 function respondToClient() {
-  return JSON.stringify(players.map(p => {
-    return {
-      id: p.id,
-      name: p.name,
-      maxHP: p.maxHP,
-      hp: p.hp,
-      pos: p.pos,
-      gunAngle: p.gunAngle,
-      color: p.color,
-      size: p.size,
-      bullets: p.bullets.map(b => ({pos: b.pos, size: b.size}))
-    }
-  }))
+  return JSON.stringify({
+    name: 'USERS_CANVAS',
+    data: players.map(p => {
+      return {
+        id: p.id,
+        name: p.name,
+        maxHP: p.maxHP,
+        hp: p.hp,
+        pos: p.pos,
+        gunAngle: p.gunAngle,
+        color: p.color,
+        size: p.size,
+        bullets: p.bullets.map(b => ({pos: b.pos, size: b.size}))
+      }
+    })
+  })
 }
+
+// CHAT
+
+const chat_history = []
 
 // GAME
 
@@ -122,6 +129,13 @@ wss.on('connection', webs => {
 
     if(msg.name === 'USER_INIT') {
       players.push(new plyr.Player({id: msg.user_id, name: msg.user_name, color: '#0ed', pos: {x: gameData.cW / 2, y: gameData.cH / 2}}))
+      chat_history.forEach(m => {
+        webs.send(JSON.stringify({
+          name: 'USER_CHAT_MESSAGE',
+          user_name: m.user_name,
+          message: m.message
+        }))
+      })
       if(players.length === 1) makeGame()
     }
     else if(msg.name === 'USER_INPUT') {
@@ -133,6 +147,17 @@ wss.on('connection', webs => {
       webs.addEventListener('close', () => {
         players.splice(players.findIndex(p => +p.id === +msg.user_id), 1)
       }, {once: 1})
+    }
+    else if(msg.name === 'USER_CHAT_MESSAGE') {
+      chat_history.push({user_name: msg.user_name, message: msg.message})
+
+      wss.clients.forEach(client => {
+        if(client.readyState === ws.WebSocket.OPEN) client.send(JSON.stringify({
+          name: 'USER_CHAT_MESSAGE',
+          user_name: msg.user_name,
+          message: msg.message
+        }))
+      })
     }
   })
 

@@ -59,12 +59,12 @@ function display_bullet(bulletData) {
   ctx.fill()
 }
 
-function display(dataString) {
-  const data = JSON.parse(dataString)
+function display(data) {
+  const dt = data
 
   ctx.clearRect(0, 0, cW, cH)
   
-  data.forEach(p => {
+  dt.forEach(p => {
     display_player(p)
 
     p.bullets.forEach(b => {

@@ -74,6 +74,7 @@ canvas {
 }
 .chat-container {
   overflow-y: scroll;
+  width: 100%;
 }
 .chat-container .message {
   margin: 0;

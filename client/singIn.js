@@ -21,9 +21,17 @@ document.querySelector('#sing-in-form').addEventListener('submit', e => {
   }
 
   ws.onmessage = resp => {
-    display(resp.data)
-    userData.inpts.user_id = userData.id
-    ws.send(JSON.stringify(userData.inpts))
+    const data = JSON.parse(resp.data)
+
+    if(data.name === 'USERS_CANVAS') {
+
+      display(data.data)
+      userData.inpts.user_id = userData.id
+      ws.send(JSON.stringify(userData.inpts))
+    }
+    else if(data.name === 'USER_CHAT_MESSAGE') {
+      document.querySelector('.chat-container').insertAdjacentHTML('beforeend', `<p class="message my-msg"><span class="chat-name">${data.user_name}:</span> ${data.message}</p>`)
+    }
   }
 
   ws.onclose = () => alert('Соединение разорвано. Перезагрузите страницу')
