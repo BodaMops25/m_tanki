@@ -1,0 +1,104 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+canvas {
+  width: 500px;
+  height: 500px;
+  border: 1px solid;
+}
+
+/* START SCREEN */
+
+.sing-in-window {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  background: radial-gradient(circle, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .55) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sing-in-container {
+  padding: 30px;
+  border-radius: 20px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .3);
+  width: 30%;
+}
+.sing-in-container #sing-in-form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.sing-in-container #sing-in-form label {
+  font-size: 30px;
+  padding-bottom: 20px;
+}
+.sing-in-container #sing-in-form input {
+  font-size: 20px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+.sing-in-container #sing-in-form button {
+  font-size: 20px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* CHAT WINDOW */
+
+.chat-window {
+  box-sizing: border-box;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 30%;
+  height: calc(100% - 20px);
+  border-radius: 10px;
+  padding: 30px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.chat-container {
+  overflow-y: scroll;
+}
+.chat-container .message {
+  margin: 0;
+  margin-bottom: 20px;
+}
+.chat-container .message .chat-name {font-weight: bold}
+
+.chat-container .my-msg .chat-name {
+  text-decoration: underline;
+  color: #240072;
+}
+#chat-send-message-form {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#chat-send-message-form input {
+  width: 100%;
+  margin-right: 10px;
+  font-size: 18px;
+  padding: 8px;
+}
+#chat-send-message-form button {
+  font-size: 18px;
+  padding: 8px;
+}

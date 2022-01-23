@@ -23,12 +23,6 @@ class MovingParticle {
     this.pos.x += Math.cos(degToRad(this.moveAngle)) * this.speed
     this.pos.y += Math.sin(degToRad(this.moveAngle)) * this.speed
   }
-  // display(canvasCtx) {
-    // canvasCtx.beginPath()
-    // canvasCtx.arc(this.pos.x, this.pos.y, this.size, 0, Math.PI * 2)
-    // canvasCtx.fillStyle = this.color
-    // canvasCtx.fill()
-  // }
 }
 
 class Bullet extends MovingParticle {
@@ -71,7 +65,6 @@ class Bullet extends MovingParticle {
 
         if(p.hp <= 0) {
           arr.splice(i, 1)
-          // alert('you dead!')
         }
       }
     })
@@ -105,6 +98,7 @@ class Player extends MovingParticle {
     this.bullets = []
     this.canShoot = canShoot
     this.shootDelay = shootDelay
+    this.lifeTime = 60
   }
 
   move() {
@@ -144,32 +138,6 @@ class Player extends MovingParticle {
       this.forces.y = 0
     }
   }
-
-  // setMovement() {
-  //   document.addEventListener('keydown', e => {
-  //     if(e.key === 'd') this.moveDir.x = 1
-  //     if(e.key === 's') this.moveDir.y = 1
-  //     if(e.key === 'a') this.moveDir.x = -1
-  //     if(e.key === 'w') this.moveDir.y = -1
-  //   })
-    
-  //   document.addEventListener('keyup', e => {
-  //     if(e.key === 'd') this.moveDir.x = null
-  //     if(e.key === 's') this.moveDir.y = null
-  //     if(e.key === 'a') this.moveDir.x = null
-  //     if(e.key === 'w') this.moveDir.y = null
-  //   })
-    
-  //   document.addEventListener('mousemove', e => {
-  //     this.cursorCoords.x = e.offsetX
-  //     this.cursorCoords.y = e.offsetY
-  //   })
-    
-  //   document.addEventListener('click', e => {
-  //     this.shoot()
-  //   })
-  // }
-
   get gunAngle() {
     const eX = this.cursorCoords.x - this.pos.x,
           eY = this.cursorCoords.y - this.pos.y
@@ -192,45 +160,6 @@ class Player extends MovingParticle {
       setTimeout(() => this.canShoot = true, this.shootDelay)
     }
   }
-
-  // display_player(cnvsCtx) {
-  //   this.display(cnvsCtx)
-
-  //   cnvsCtx.strokeStyle = '#a0a0a0'
-  //   cnvsCtx.lineWidth = 3
-  //   cnvsCtx.stroke()
-
-  //   // hp
-
-  //   const d = this.size * 2
-
-  //   cnvsCtx.beginPath()
-  //   cnvsCtx.rect(this.pos.x - d, this.pos.y + d, d * 2 * this.hp / this.maxHP, this.size / 2)
-  //   cnvsCtx.fillStyle = 'green'
-  //   cnvsCtx.fill()
-
-  //   cnvsCtx.beginPath()
-  //   cnvsCtx.rect(this.pos.x + d, this.pos.y + d, -d * 2 * (1 - this.hp / this.maxHP), this.size / 2)
-  //   cnvsCtx.fillStyle = 'red'
-  //   cnvsCtx.fill()
-
-  //   // name
-
-  //   cnvsCtx.fillStyle = '#000'
-  //   cnvsCtx.fillText(this.name, this.pos.x - this.name.length * 3.4, this.pos.y - d)
-
-  //   // gun
-
-  //   cnvsCtx.beginPath()
-  //   cnvsCtx.fillStyle = '#000'
-  //   cnvsCtx.arc(this.pos.x, this.pos.y, 2, 0, Math.PI * 2)
-  //   cnvsCtx.fill()
-  //   cnvsCtx.moveTo(this.pos.x, this.pos.y)
-  //   cnvsCtx.lineTo(this.pos.x + Math.cos(degToRad(this.gunAngle)) * this.size * 2, this.pos.y + Math.sin(degToRad(this.gunAngle)) * this.size * 2)
-  //   cnvsCtx.strokeStyle = '#000'
-  //   cnvsCtx.lineWidth = 5
-  //   cnvsCtx.stroke()
-  // }
 }
 
 module.exports = {MovingParticle, Player, Bullet}

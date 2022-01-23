@@ -5,29 +5,38 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tanki game</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    canvas {
-      width: 500px;
-      height: 500px;
-      border: 1px solid;
-    }
-  </style>
+  <link rel="stylesheet" href="client/styles.css">
 </head>
 <body>
   
   <canvas id="gamefield"></canvas>
+
+  <div class="sing-in-window" style="display: none;">
+    <div class="sing-in-container">
+      <form id="sing-in-form">
+        <label for="user-name">Введите никнейм</label>
+        <input type="text" id="user-name" placeholder="Абоба22">
+        <button type="submit">Играть</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="chat-window">
+    <div class="chat-container">
+      <p class="message"><span class="chat-name">Aboba:</span> Hi!</p>
+      <p class="message"><span class="chat-name">Aboba:</span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo perspiciatis numquam iusto delectus minus dolorem, ullam pariatur rerum omnis doloribus incidunt corporis quasi a ipsum vel consequuntur cum soluta odio quos! Quod dolores maiores corporis quisquam earum dolorum numquam qui nisi cum, deserunt laudantium, asperiores voluptatibus nulla consequuntur atque. Expedita, dolore facere numquam facilis ad molestiae totolorum numquam qui nisi cum, deserunt laudantium, asperiores voluptatibus nulla consequuntur atque. Expedita, dolore facere numquam facilis ad molestiae totam, fugit enim velit provident, mollitia et quos autem rerum aliquam iste repudiandae voluptate inventore repellat. Facam, fugit enim velit provident, mollitia et quos autem rerum aliquam iste repudiandae voluptate inventore repellat. Facere corporis pariatur asperiores sunt autem ex, porro reprehenderit ullam, molestias optio consequuntur vitae minus quasi doloremque provident in id. Culpa beatae aut sed aspernatur, laborum blanditiis iure.</p>
+      <p class="message my-msg"><span class="chat-name">Nickname:</span> Hell-oy!</p>
+      <p class="message"><span class="chat-name">Aboba:</span> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sapiente nihil hic incidunt facere sit laudantium voluptates atque ratione ullam quaerat maxime soluta ab quam sed facilis, cumque a exercitationem?</p>
+    </div>
+    <form id="chat-send-message-form">
+      <input type="text" id="message-value" placeholder="Сообщение...">
+      <button type="submit">Отправить</button>
+    </form>
+  </div>
   
+  <script src="client/singIn.js"></script>
   <script src="core.js"></script>
-  <script src="client.js"></script>
-  <script src="canvas.js"></script>
+  <script src="client/canvas.js"></script>
+  <script src="client/user_input.js"></script>
 </body>
 </html>

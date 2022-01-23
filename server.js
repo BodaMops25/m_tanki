@@ -48,7 +48,7 @@ const server = http.createServer((req, res) => {
   
 }).listen(PORT)
 
-// SERVER
+// WEBSOCKET SERVER
 
 const ws = require('ws'),
       wss = new ws.Server({server})
@@ -78,49 +78,59 @@ function respondToClient() {
 
 const players = []
 
-const getUpdate = setInterval(() => {
-  players.forEach(p => {
-
-    const {color, size, gunAngle, bullets,  pos: {x, y}} = p
-
-    if(u_in_resp[p.id]) {
-      p.moveDir = u_in_resp[p.id].moveDir
-      p.cursorCoords = u_in_resp[p.id].cursorCoords
-      if(u_in_resp[p.id].isLBM) p.shoot()
-    }
-    
-    p.move()
-    if(bullets.length) bullets.forEach((b, i, arr) => {
-      if(b.isDead) {
-        if(arr[i]) arr.splice(i, 1)
+function makeGame() {
+  const getUpdate = setInterval(() => {
+    players.forEach((p, i, arr) => {
+  
+      if(--p.lifeTime <= 0) {
+        arr.splice(i, 1)
         return
       }
-      b.move_bullet(players)
+  
+      const {color, size, gunAngle, bullets,  pos: {x, y}} = p
+  
+      if(u_in_resp[p.id]) {
+        p.moveDir = u_in_resp[p.id].moveDir
+        p.cursorCoords = u_in_resp[p.id].cursorCoords
+        if(u_in_resp[p.id].isLBM) p.shoot()
+      }
+      
+      p.move()
+      if(bullets.length) bullets.forEach((b, i, arr) => {
+        if(b.isDead) {
+          if(arr[i]) arr.splice(i, 1)
+          return
+        }
+        b.move_bullet(players)
+      })
+    })  
+  
+    wss.clients.forEach(client => {
+      if(client.readyState === ws.WebSocket.OPEN) client.send(respondToClient())
     })
-  })  
+  
+    if(players.length <= 0) clearInterval(getUpdate)
+  }, 1000 / gameData.gameFPS)
+}
 
-  wss.clients.forEach(client => {
-    if(client.readyState === ws.WebSocket.OPEN) client.send(respondToClient())
-  })
-
-}, 1000 / gameData.gameFPS)
-
-// SERVER
+// WEBSOCKET SERVER
 
 wss.on('connection', webs => {
 
   webs.on('message', msg => {
     msg = JSON.parse(msg.toString())
 
-    // console.log(msg.name)
-
-    if(msg.name === 'USER_INIT') players.push(new plyr.Player({id: msg.user_id, name: msg.user_name, color: '#0ed', pos: {x: gameData.cW / 2, y: gameData.cH / 2}}))
-    else if(msg.name === 'USER_INPUT') u_in_resp[msg.user_id] = msg
+    if(msg.name === 'USER_INIT') {
+      players.push(new plyr.Player({id: msg.user_id, name: msg.user_name, color: '#0ed', pos: {x: gameData.cW / 2, y: gameData.cH / 2}}))
+      if(players.length === 1) makeGame()
+    }
+    else if(msg.name === 'USER_INPUT') {
+      u_in_resp[msg.user_id] = msg
+      players.find(p => +p.id === +msg.user_id).lifeTime = 60
+    }
     else if(msg.name === 'CLIENT_DISCONNECT') {
 
       webs.addEventListener('close', () => {
-        // console.log(msg.name)
-        
         players.splice(players.findIndex(p => +p.id === +msg.user_id), 1)
       }, {once: 1})
     }
