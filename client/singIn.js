@@ -30,13 +30,17 @@ document.querySelector('#sing-in-form').addEventListener('submit', e => {
       ws.send(JSON.stringify(userData.inpts))
     }
     else if(data.name === 'USER_CHAT_MESSAGE') {
-      document.querySelector('.chat-container').insertAdjacentHTML('beforeend', `<p class="message my-msg"><span class="chat-name">${data.user_name}:</span> ${data.message}</p>`)
+      const chatCnt = document.querySelector('.chat-container')
+
+      chatCnt.insertAdjacentHTML('beforeend', `<p class="message my-msg"><span class="chat-name">${data.user_name}:</span> ${data.message}</p>`)
+      chatCnt.scrollTo(0, chatCnt.scrollTopMax)
     }
   }
 
   ws.onclose = () => alert('Соединение разорвано. Перезагрузите страницу')
 
   document.querySelector('.sing-in-window').style.display = 'none'
+  document.querySelector('.chat-window').classList.add('w-shown')
 
   window.onbeforeunload = () => {
     console.log('попытка перезагрузить страницу')

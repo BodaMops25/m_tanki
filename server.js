@@ -77,6 +77,15 @@ function respondToClient() {
   })
 }
 
+function sendUserDead(user_id) {
+  wss.clients.forEach(client => {
+    if(client.readyState === ws.WebSocket.OPEN) client.send(JSON.stringify({
+      name: 'USER_DEAD',
+      user_id: user_id
+    }))
+  })
+}
+
 // CHAT
 
 const chat_history = []
@@ -163,4 +172,10 @@ wss.on('connection', webs => {
 
 })
 
-// console.log('ws server running')
+console.log('ws server running')
+
+const Emitter = require('events'),
+      emitter = new Emitter()
+
+emitter.on('aboba', () => console.log('is emmiter'))
+emitter.emit('aboba')

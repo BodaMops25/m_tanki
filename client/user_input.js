@@ -14,17 +14,21 @@ document.addEventListener('mousemove', e => {
 })
 
 document.addEventListener('keydown', e => {
-  if(e.code === 'KeyD') u_inpts.moveDir.x = 1
-  if(e.code === 'KeyS') u_inpts.moveDir.y = 1
-  if(e.code === 'KeyA') u_inpts.moveDir.x = -1
-  if(e.code === 'KeyW') u_inpts.moveDir.y = -1
+  if(e.target !== document.querySelector('#message-value')) {
+    if(e.code === 'KeyD') u_inpts.moveDir.x = 1
+    if(e.code === 'KeyS') u_inpts.moveDir.y = 1
+    if(e.code === 'KeyA') u_inpts.moveDir.x = -1
+    if(e.code === 'KeyW') u_inpts.moveDir.y = -1
+  }
 })
 
 document.addEventListener('keyup', e => {
-  if(e.code === 'KeyD') u_inpts.moveDir.x = null
-  if(e.code === 'KeyS') u_inpts.moveDir.y = null
-  if(e.code === 'KeyA') u_inpts.moveDir.x = null
-  if(e.code === 'KeyW') u_inpts.moveDir.y = null
+  if(e.target !== document.querySelector('#message-value')) {
+    if(e.code === 'KeyD') u_inpts.moveDir.x = null
+    if(e.code === 'KeyS') u_inpts.moveDir.y = null
+    if(e.code === 'KeyA') u_inpts.moveDir.x = null
+    if(e.code === 'KeyW') u_inpts.moveDir.y = null
+  }
 })
 
 document.addEventListener('mousedown', e => {

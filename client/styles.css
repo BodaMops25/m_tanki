@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  width: 100vw;
+  width: 1366px;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -71,6 +71,20 @@ canvas {
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
+  opacity: 0;
+  transition: opacity 5s;
+}
+.chat-window .tip {
+  width: 100%;
+  font-size: 16px;
+  opacity: .7;
+  text-align: center;
+  margin-top: 0;
+
+}
+.chat-window.w-shown {
+  opacity: 1;
+  transition: opacity .2s;
 }
 .chat-container {
   overflow-y: scroll;
