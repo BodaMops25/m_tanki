@@ -149,7 +149,7 @@ wss.on('connection', webs => {
     }
     else if(msg.name === 'USER_INPUT') {
       u_in_resp[msg.user_id] = msg
-      players.find(p => +p.id === +msg.user_id).lifeTime = 60
+      if(players.find(p => +p.id === +msg.user_id)) players.find(p => +p.id === +msg.user_id).lifeTime = 60
     }
     else if(msg.name === 'CLIENT_DISCONNECT') {
 
